@@ -27,6 +27,8 @@ class TipContainer extends Component<Props, State> {
   state: State;
   props: Props;
 
+  container = React.createRef();
+
   componentDidUpdate(nextProps: Props) {
     if (this.props.children !== nextProps.children) {
       this.updatePosition();
@@ -38,9 +40,10 @@ class TipContainer extends Component<Props, State> {
   }
 
   updatePosition = () => {
-    const { container } = this.refs;
+    if (!this.container.current)
+      return;
 
-    const { offsetHeight, offsetWidth } = container;
+    const { offsetHeight, offsetWidth } = this.container.current;
 
     this.setState({
       height: offsetHeight,
@@ -92,7 +95,7 @@ class TipContainer extends Component<Props, State> {
           top,
           left
         }}
-        ref="container"
+        ref={this.container}
       >
         {childrenWithProps}
       </div>

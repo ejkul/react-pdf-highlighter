@@ -63,7 +63,7 @@ class App extends Component<Props, State> {
     });
   };
 
-  scrollViewerTo = (highlight: any) => {};
+  scrollViewerTo = (highlight: any) => { };
 
   scrollToHighlightFromHash = () => {
     const highlight = this.getHighlightById(parseIdFromHash());
@@ -104,10 +104,10 @@ class App extends Component<Props, State> {
       highlights: this.state.highlights.map(h => {
         return h.id === highlightId
           ? {
-              ...h,
-              position: { ...h.position, ...position },
-              content: { ...h.content, ...content }
-            }
+            ...h,
+            position: { ...h.position, ...position },
+            content: { ...h.content, ...content }
+          }
           : h;
       })
     });
@@ -147,15 +147,18 @@ class App extends Component<Props, State> {
                   hideTipAndSelection,
                   transformSelection
                 ) => (
-                  <Tip
-                    onOpen={transformSelection}
-                    onConfirm={comment => {
-                      this.addHighlight({ content, position, comment });
+                    <Tip
+                      onOpen={transformSelection}
+                      placeholder="Opis"
+                      saveButtonText="Zapisz"
+                      addButtonText="Dodaj Opis"
+                      onConfirm={comment => {
+                        this.addHighlight({ content, position, comment });
 
-                      hideTipAndSelection();
-                    }}
-                  />
-                )}
+                        hideTipAndSelection();
+                      }}
+                    />
+                  )}
                 highlightTransform={(
                   highlight,
                   index,
@@ -169,24 +172,24 @@ class App extends Component<Props, State> {
                     highlight.content && highlight.content.image
                   );
 
-                  const component = isTextHighlight ? (
+                  const component = false ? (
                     <Highlight
                       isScrolledTo={isScrolledTo}
                       position={highlight.position}
                       comment={highlight.comment}
                     />
                   ) : (
-                    <AreaHighlight
-                      highlight={highlight}
-                      onChange={boundingRect => {
-                        this.updateHighlight(
-                          highlight.id,
-                          { boundingRect: viewportToScaled(boundingRect) },
-                          { image: screenshot(boundingRect) }
-                        );
-                      }}
-                    />
-                  );
+                      <AreaHighlight
+                        highlight={highlight}
+                        onChange={boundingRect => {
+                          this.updateHighlight(
+                            highlight.id,
+                            { boundingRect: viewportToScaled(boundingRect) },
+                            { image: screenshot(boundingRect) }
+                          );
+                        }}
+                      />
+                    );
 
                   return (
                     <Popup

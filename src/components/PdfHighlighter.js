@@ -27,13 +27,13 @@ import { scaledToViewport, viewportToScaled } from "../lib/coordinates";
 
 import type {
   T_Position,
-  T_ScaledPosition,
-  T_Highlight,
-  T_Scaled,
-  T_LTWH,
-  T_PDFJS_Viewer,
-  T_PDFJS_Document,
-  T_PDFJS_LinkService
+    T_ScaledPosition,
+    T_Highlight,
+    T_Scaled,
+    T_LTWH,
+    T_PDFJS_Viewer,
+    T_PDFJS_Document,
+    T_PDFJS_LinkService
 } from "../types";
 
 type T_ViewportHighlight<T_HT> = { position: T_Position } & T_HT;
@@ -74,7 +74,7 @@ type Props<T_HT> = {
     content: { text?: string, image?: string },
     hideTipAndSelection: () => void,
     transformSelection: () => void
-  ) => ?React$Element<*>,
+  ) =>?React$Element<*>,
   enableAreaSelection: (event: MouseEvent) => boolean
 };
 
@@ -90,7 +90,7 @@ let clickTimeoutId: TimeoutID;
 class PdfHighlighter<T_HT: T_Highlight> extends Component<
   Props<T_HT>,
   State<T_HT>
-> {
+  > {
   state = {
     ghostHighlight: null,
     isCollapsed: true,
@@ -374,7 +374,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
         ...pageViewport.convertToPdfPoint(
           0,
           scaledToViewport(boundingRect, pageViewport, usePdfCoordinates).top -
-            scrollMargin
+          scrollMargin
         ),
         0
       ]
@@ -402,6 +402,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
   };
 
   onSelectionChange = () => {
+    return;
     const selection: Selection = window.getSelection();
 
     if (selection.isCollapsed) {

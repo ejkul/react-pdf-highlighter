@@ -12,6 +12,9 @@ type State = {
 
 type Props = {
   onConfirm: (comment: { text: string, emoji: string }) => void,
+  placeholder: string,
+  saveButtonText: string,
+  addButtonText: string,
   onOpen: () => void,
   onUpdate?: () => void
 };
@@ -26,6 +29,12 @@ class Tip extends Component<Props, State> {
   state: State;
   props: Props;
 
+  static defaultProps = {
+    placeholder: "Add comment",
+    saveButtonText: "Save",
+    addButtonText: "Add Highlight"
+  }
+
   // for TipContainer
   componentDidUpdate(nextProps: Props, nextState: State) {
     const { onUpdate } = this.props;
@@ -36,7 +45,7 @@ class Tip extends Component<Props, State> {
   }
 
   render() {
-    const { onConfirm, onOpen } = this.props;
+    const { onConfirm, onOpen, placeholder, saveButtonText, addButtonText } = this.props;
     const { compact, text, emoji } = this.state;
 
     return (
@@ -49,30 +58,30 @@ class Tip extends Component<Props, State> {
               this.setState({ compact: false });
             }}
           >
-            Add highlight
+            {addButtonText}
           </div>
         ) : (
-          <form
-            className="Tip__card"
-            onSubmit={event => {
-              event.preventDefault();
-              onConfirm({ text, emoji });
-            }}
-          >
-            <div>
-              <textarea
-                width="100%"
-                placeholder="Your comment"
-                autoFocus
-                value={text}
-                onChange={event => this.setState({ text: event.target.value })}
-                ref={node => {
-                  if (node) {
-                    node.focus();
-                  }
-                }}
-              />
+            <form
+              className="Tip__card"
+              onSubmit={event => {
+                event.preventDefault();
+                onConfirm({ text, emoji });
+              }}
+            >
               <div>
+                <textarea
+                  width="100%"
+                  placeholder={placeholder}
+                  autoFocus
+                  value={text}
+                  onChange={event => this.setState({ text: event.target.value })}
+                  ref={node => {
+                    if (node) {
+                      node.focus();
+                    }
+                  }}
+                />
+                {/*               <div>
                 {["💩", "😱", "😍", "🔥", "😳", "⚠️"].map(_emoji => (
                   <label key={_emoji}>
                     <input
@@ -87,13 +96,13 @@ class Tip extends Component<Props, State> {
                     {_emoji}
                   </label>
                 ))}
+              </div> */}
               </div>
-            </div>
-            <div>
-              <input type="submit" value="Save" />
-            </div>
-          </form>
-        )}
+              <div>
+                <input type="submit" value={saveButtonText} />
+              </div>
+            </form>
+          )}
       </div>
     );
   }

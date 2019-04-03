@@ -34,8 +34,8 @@
     "husky": "0.11.9",
     "nwb": "0.21.0",
     "prettier": "^1.8.2",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react": "^16.0",
+    "react-dom": "^16.0",
     "url-search-params": "0.6.1"
   },
   "author": "Artem Tyurin <artem.tyurin@gmail.com>",
