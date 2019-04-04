@@ -23,7 +23,7 @@ type Props = {
     boundingRect: T_LTWH,
     resetSelection: () => void
   ) => void,
-  onDragStart: (event: MouseEvent) => boolean,
+  onDragStart: (event: any) => boolean,
   onDragEnd: () => void,
   shouldStart: (event: MouseEvent) => boolean,
   onChange: (isVisible: boolean) => void

@@ -511,8 +511,6 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
     );
   }
 
-  isAreaHighlight = (el: any) => el.classList.contains("AreaHighlight");
-
   render() {
     const { onSelectionFinished, enableAreaSelection } = this.props;
     return (
@@ -525,7 +523,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
           <div className="pdfViewer" />
           {typeof enableAreaSelection === "function" ? (
             <MouseSelection
-              onDragStart={(event) => this.isAreaHighlight(event.target)}
+              onDragStart={(event) => event && event.target.classList && event.target.classList.contains("AreaHighlight")}
               onDragEnd={() => { }}
               onChange={isVisible => {
                 this.setState({ isAreaSelectionInProgress: isVisible });
