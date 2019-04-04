@@ -23,7 +23,7 @@ type Props = {
     boundingRect: T_LTWH,
     resetSelection: () => void
   ) => void,
-  onDragStart: () => void,
+  onDragStart: (event: MouseEvent) => boolean,
   onDragEnd: () => void,
   shouldStart: (event: MouseEvent) => boolean,
   onChange: (isVisible: boolean) => void
@@ -62,7 +62,6 @@ class MouseSelection extends Component<Props, State> {
     const { start, end } = this.state;
 
     const isVisible = Boolean(start && end);
-
     onChange(isVisible);
   }
 
@@ -108,7 +107,7 @@ class MouseSelection extends Component<Props, State> {
     });
 
     container.addEventListener("mousedown", (event: MouseEvent) => {
-      if (!shouldStart(event)) {
+      if (onDragStart(event) || !shouldStart(event)) {
         this.reset();
         return;
       }
@@ -118,8 +117,6 @@ class MouseSelection extends Component<Props, State> {
       if (!(startTarget instanceof HTMLElement)) {
         return;
       }
-
-      onDragStart();
 
       this.setState({
         start: containerCoords(event.pageX, event.pageY),

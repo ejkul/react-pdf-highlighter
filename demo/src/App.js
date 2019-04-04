@@ -134,7 +134,7 @@ class App extends Component<Props, State> {
             {pdfDocument => (
               <PdfHighlighter
                 pdfDocument={pdfDocument}
-                enableAreaSelection={event => event.altKey}
+                enableAreaSelection={event => true}
                 onScrollChange={resetHash}
                 scrollRef={scrollTo => {
                   this.scrollViewerTo = scrollTo;
@@ -182,6 +182,7 @@ class App extends Component<Props, State> {
                       <AreaHighlight
                         highlight={highlight}
                         onChange={boundingRect => {
+                          console.log('area highlight on change');
                           this.updateHighlight(
                             highlight.id,
                             { boundingRect: viewportToScaled(boundingRect) },

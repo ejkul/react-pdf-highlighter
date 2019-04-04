@@ -95,7 +95,8 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
     ghostHighlight: null,
     isCollapsed: true,
     range: null,
-    scrolledToHighlightId: EMPTY_ID
+    scrolledToHighlightId: EMPTY_ID,
+    isAreaSelectionInProgress: false
   };
 
   state: State<T_HT>;
@@ -138,9 +139,9 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
     this.linkService.setViewer(this.viewer);
 
     // debug
-    window.PdfViewer = this;
+    //window.PdfViewer = this;
 
-    document.addEventListener("selectionchange", this.onSelectionChange);
+    //document.addEventListener("selectionchange", this.onSelectionChange);
     document.addEventListener("keydown", this.handleKeyDown);
 
     this.containerNode &&
@@ -156,7 +157,7 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
   }
 
   componentWillUnmount() {
-    document.removeEventListener("selectionchange", this.onSelectionChange);
+    //document.removeEventListener("selectionchange", this.onSelectionChange);
     document.removeEventListener("keydown", this.handleKeyDown);
 
     this.containerNode &&
@@ -402,7 +403,6 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
   };
 
   onSelectionChange = () => {
-    return;
     const selection: Selection = window.getSelection();
 
     if (selection.isCollapsed) {
@@ -511,9 +511,10 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
     );
   }
 
+  isAreaHighlight = (el: any) => el.classList.contains("AreaHighlight");
+
   render() {
     const { onSelectionFinished, enableAreaSelection } = this.props;
-
     return (
       <Pointable onPointerDown={this.onMouseDown}>
         <div
@@ -524,10 +525,11 @@ class PdfHighlighter<T_HT: T_Highlight> extends Component<
           <div className="pdfViewer" />
           {typeof enableAreaSelection === "function" ? (
             <MouseSelection
-              onDragStart={() => this.toggleTextSelection(true)}
-              onDragEnd={() => this.toggleTextSelection(false)}
-              onChange={isVisible =>
-                this.setState({ isAreaSelectionInProgress: isVisible })
+              onDragStart={(event) => this.isAreaHighlight(event.target)}
+              onDragEnd={() => { }}
+              onChange={isVisible => {
+                this.setState({ isAreaSelectionInProgress: isVisible });
+              }
               }
               shouldStart={event =>
                 enableAreaSelection(event) &&
